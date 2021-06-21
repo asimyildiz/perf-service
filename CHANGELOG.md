@@ -2,7 +2,13 @@
 
 ## History
 
-### v1.0.0 (CURRENT RELEASE)
+### v1.0.1 (CURRENT RELEASE)
+
+* Next version that includes handling of bulk metric data
+* `#9` : Add new route and new services to handle saving bulk data
+* `#10`: Update and add new tests
+
+### v1.0.0 (PREVIOUS RELEASE)
 
 * Initial version that has an express server and mongoose
 * `#0` : Add express to handle service requests

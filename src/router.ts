@@ -57,6 +57,7 @@ export class Router {
   public routes(): void {
     this._application.route('/').get(this._applicationRouter.hello);
     this._application.route('/report').post(this._reportRouter.report);
+    this._application.route('/reportMany').post(this._reportRouter.reportMany);
   }
 
   /**

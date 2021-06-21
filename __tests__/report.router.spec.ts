@@ -54,17 +54,27 @@ afterEach(() => {
 });
 
 describe('application router test with fake environment', () => {
-  it('should have called save on DeviceServices when request is called with device data', () => {
+  it('should have called save on DeviceServices when request is called with device data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { device: deviceData } });
     const response = mockResponse();
     DeviceServices.save = jest.fn();
-    reportRouter.report(request, response);
-
+    await reportRouter.report(request, response);
     expect(DeviceServices.save).toBeCalled();
   });
 
-  it('should fire an exception when save method called on DeviceServices with wrong device data', () => {
+  it('should have called saveMany on DeviceServices when request is called with array', async () => {
+    const reportRouter = new ReportRouter();
+    const request = mockRequest({
+      body: JSON.stringify([{ device: deviceData }]),
+    });
+    const response = mockResponse();
+    DeviceServices.saveMany = jest.fn();
+    await reportRouter.reportMany(request, response);
+    expect(DeviceServices.saveMany).toBeCalled();
+  });
+
+  it('should fire an exception when save method called on DeviceServices with wrong device data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { device: {} } });
     const response = mockResponse();
@@ -72,27 +82,36 @@ describe('application router test with fake environment', () => {
       throw new Error();
     });
 
-    reportRouter.report(request, response);
+    await reportRouter.report(request, response);
     expect(
       response.status.mock.calls[response.status.mock.calls.length - 1][0],
     ).toBe(ERROR_SERVICE.code);
-
     expect(
       response.send.mock.calls[response.send.mock.calls.length - 1][0],
     ).toStrictEqual(ERROR_SERVICE);
   });
 
-  it('should have called save on ResourceServices when request is called with resource data', () => {
+  it('should have called save on ResourceServices when request is called with resource data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { resource: resourceData } });
     const response = mockResponse();
     ResourceServices.save = jest.fn();
-    reportRouter.report(request, response);
-
+    await reportRouter.report(request, response);
     expect(ResourceServices.save).toBeCalled();
   });
 
-  it('should fire an exception when save method called on ResourceServices with wrong device data', () => {
+  it('should have called saveMany on ResourceServices when request is called with array', async () => {
+    const reportRouter = new ReportRouter();
+    const request = mockRequest({
+      body: JSON.stringify([{ resource: resourceData }]),
+    });
+    const response = mockResponse();
+    ResourceServices.saveMany = jest.fn();
+    await reportRouter.reportMany(request, response);
+    expect(ResourceServices.saveMany).toBeCalled();
+  });
+
+  it('should fire an exception when save method called on ResourceServices with wrong device data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { resource: {} } });
     const response = mockResponse();
@@ -100,7 +119,7 @@ describe('application router test with fake environment', () => {
       throw new Error();
     });
 
-    reportRouter.report(request, response);
+    await reportRouter.report(request, response);
     expect(
       response.status.mock.calls[response.status.mock.calls.length - 1][0],
     ).toBe(ERROR_SERVICE.code);
@@ -110,17 +129,27 @@ describe('application router test with fake environment', () => {
     ).toStrictEqual(ERROR_SERVICE);
   });
 
-  it('should have called save on VitalServices when request is called with vital data', () => {
+  it('should have called save on VitalServices when request is called with vital data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { vital: vitalData } });
     const response = mockResponse();
     VitalServices.save = jest.fn();
-    reportRouter.report(request, response);
-
+    await reportRouter.report(request, response);
     expect(VitalServices.save).toBeCalled();
   });
 
-  it('should fire an exception when save method called on VitalServices with wrong device data', () => {
+  it('should have called saveMany on VitalServices when request is called with array', async () => {
+    const reportRouter = new ReportRouter();
+    const request = mockRequest({
+      body: JSON.stringify([{ vital: vitalData }]),
+    });
+    const response = mockResponse();
+    VitalServices.saveMany = jest.fn();
+    await reportRouter.reportMany(request, response);
+    expect(VitalServices.saveMany).toBeCalled();
+  });
+
+  it('should fire an exception when save method called on VitalServices with wrong device data', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { vital: {} } });
     const response = mockResponse();
@@ -128,7 +157,7 @@ describe('application router test with fake environment', () => {
       throw new Error();
     });
 
-    reportRouter.report(request, response);
+    await reportRouter.report(request, response);
     expect(
       response.status.mock.calls[response.status.mock.calls.length - 1][0],
     ).toBe(ERROR_SERVICE.code);
@@ -138,12 +167,26 @@ describe('application router test with fake environment', () => {
     ).toStrictEqual(ERROR_SERVICE);
   });
 
-  it('should have fire an exception when request is called with wrong data', () => {
+  it('should have fire an exception when request is called with wrong data on save', async () => {
     const reportRouter = new ReportRouter();
     const request = mockRequest({ body: { wrong: {} } });
     const response = mockResponse();
-    reportRouter.report(request, response);
 
+    await reportRouter.report(request, response);
+    expect(
+      response.status.mock.calls[response.status.mock.calls.length - 1][0],
+    ).toBe(ERROR_MISSING.code);
+    expect(
+      response.send.mock.calls[response.send.mock.calls.length - 1][0],
+    ).toStrictEqual(ERROR_MISSING);
+  });
+
+  it('should have fire an exception when request is called with wrong data on savemany', async () => {
+    const reportRouter = new ReportRouter();
+    const request = mockRequest({ body: JSON.stringify({ wrong: {} }) });
+    const response = mockResponse();
+
+    await reportRouter.reportMany(request, response);
     expect(
       response.status.mock.calls[response.status.mock.calls.length - 1][0],
     ).toBe(ERROR_MISSING.code);
@@ -151,5 +194,29 @@ describe('application router test with fake environment', () => {
     expect(
       response.send.mock.calls[response.send.mock.calls.length - 1][0],
     ).toStrictEqual(ERROR_MISSING);
+  });
+
+  it('should have fire an exception when request causes an exception to be thrown', async () => {
+    const reportRouter = new ReportRouter();
+    const request = mockRequest({ body: JSON.stringify([{ wrong: {} }]) });
+    const response = mockResponse();
+    DeviceServices.saveMany = jest.fn(() => {
+      throw new Error();
+    });
+    VitalServices.saveMany = jest.fn(() => {
+      throw new Error();
+    });
+    ResourceServices.saveMany = jest.fn(() => {
+      throw new Error();
+    });
+
+    await reportRouter.reportMany(request, response);
+    expect(
+      response.status.mock.calls[response.status.mock.calls.length - 1][0],
+    ).toBe(ERROR_SERVICE.code);
+
+    expect(
+      response.send.mock.calls[response.send.mock.calls.length - 1][0],
+    ).toStrictEqual(ERROR_SERVICE);
   });
 });

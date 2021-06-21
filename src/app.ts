@@ -63,6 +63,7 @@ export class App {
     this.application.use(helmet());
     this.application.use(cors());
     this.application.use(express.json());
+    this.application.use(express.text());
   }
 
   /**

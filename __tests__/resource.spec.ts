@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongoose';
 import { connect, close, clear } from '../__mocks__/database.mock';
-import { IResource } from '../src/interfaces/resource.interface';
+import { data, data2 } from './data/resource.data';
 import ResourceModel from '../src/models/resource.model';
 import { ResourceServices } from '../src/services/resource.services';
 
@@ -9,23 +9,6 @@ jest.setTimeout(30000);
 beforeAll(async () => await connect());
 afterEach(async () => await clear());
 afterAll(async () => await close());
-
-const data = <IResource>{
-  decodedBodySize: 89476,
-  dnsLookupTime: 0,
-  encodedBodySize: 89476,
-  fetchUntilResponseEndTime: 286.09999999403954,
-  id: 'v1-1624213181207-9776614057997',
-  initiatorType: 'script',
-  name: 'http://test/js/jquery.min.js',
-  redirectTime: 0,
-  requestStartUntilResponseEndTime: 286.09999999403954,
-  responseTime: 5.5,
-  secureConnectionTime: 0,
-  startUntilResponseEndTime: 286.09999999403954,
-  tcpHandshakeTime: 0.4000000059604645,
-  transferSize: 89787,
-};
 
 describe('Database method tests for Resource', () => {
   it('should save resource correctly to database', async () => {
@@ -64,6 +47,31 @@ describe('Database method tests for Resource', () => {
     data.name = '';
     try {
       await ResourceServices.save(data);
+    } catch (ex) {
+      expect(true).toBe(true);
+      return;
+    } finally {
+      data.name = nameBackup;
+    }
+    expect(false).toBe(true);
+  });
+
+  it('should save multiple resources correctly to database', async () => {
+    const resourceIds: Array<ObjectId> = await ResourceServices.saveMany([
+      data,
+      data2,
+    ]);
+    expect(resourceIds.length).toBe(2);
+
+    const resources = await ResourceModel.find({ _id: { $in: resourceIds } });
+    expect(resources.length).toBe(2);
+  });
+
+  it('should throw an error when wrong data is sent to register multiple resources', async () => {
+    const nameBackup = data.name;
+    data.name = '';
+    try {
+      await ResourceServices.saveMany([data, data2]);
     } catch (ex) {
       expect(true).toBe(true);
       return;
