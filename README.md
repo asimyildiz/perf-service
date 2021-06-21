@@ -5,20 +5,23 @@ performance library gateway to store ttfb, fcp, dom load and window load events 
 See [changelog](./CHANGELOG.md) for current versions and feature plans.
 
 # api gateway
-Only '/report' route is being used to handle saving of web-vitals metrics as well as resource metrics and device data
+'/report' route is used to handle saving of single web-vitals metrics as well as resource metrics and device data
+'/reportMany' route is used to handle saving of bulk web-vitals metrics as well as resource metrics and device data 
 
 The 2 packages used here :
 1. express.js is being used to handle http requests and responses
 2. mongoose.js is being used to store data into MongoDB Atlas
 
 # usage
-I will create a docker image and then publish that image to Amazon ECR
-Before start testing on local you need to open a MongoDb Atlas account and set the information below into .env file:
-- PORT
-- DATABASE_URL 
-- DATABASE_USER 
-- DATABASE_PASS 
-- DATABASE_NAME
+A docker image will be created and then it will be published to Amazon ECR
+Before start testing on local you need to open a MongoDb Atlas account and set the information below into and .env file:
+> touch .env
+- PORT=8080
+- DATABASE_URL=mongodb.url
+- DATABASE_USER=mongodb.user
+- DATABASE_PASS=mongodb.pass
+- DATABASE_NAME=mongodb.name
+
 Then to test the services on local:
 > npm run start
 
