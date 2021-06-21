@@ -13,7 +13,13 @@ The 2 packages used here :
 
 # usage
 I will create a docker image and then publish that image to Amazon ECR
-For local testing:
+Before start testing on local you need to open a MongoDb Atlas account and set the information below into .env file:
+- PORT
+- DATABASE_URL 
+- DATABASE_USER 
+- DATABASE_PASS 
+- DATABASE_NAME
+Then to test the services on local:
 > npm run start
 
 # known issues
