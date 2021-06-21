@@ -1,0 +1,16 @@
+{
+  "collectCoverage": true,
+  "collectCoverageFrom": ["**/*.ts", "!**/node_modules/**"],  
+  "rootDir": "./",
+  "moduleFileExtensions": [
+    "js",
+    "ts"
+  ],
+  "transform": {
+    "^.+\\.ts?$": "ts-jest"
+  },
+  "testRegex": "((\\.|/*.)(spec))\\.ts?$",
+  "moduleNameMapper": {
+    "^src/(.*)$": "<rootDir>/src/$1"
+  }
+}
