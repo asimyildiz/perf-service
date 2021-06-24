@@ -12,5 +12,6 @@
   "testRegex": "((\\.|/*.)(spec))\\.ts?$",
   "moduleNameMapper": {
     "^src/(.*)$": "<rootDir>/src/$1"
-  }
+  },
+  "setupFiles": ["./__mocks__/environment.mock.ts"]
 }
