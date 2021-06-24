@@ -2,7 +2,13 @@
 
 ## History
 
-### v1.0.2 (CURRENT RELEASE)
+### v1.0.3 (CURRENT RELEASE)
+
+* Add CI/CD pipeline using AWS CodePipeline
+* `#11` : Enable CI/CD pipeline using AWS CodePipeline
+* `#12` : Update tests to mock environment variables using setupFiles from jest.config
+
+### v1.0.2 (PREVIOUS RELEASE)
 
 * Add deployment to Amazon
 * `#3` : Add forever script and configure it
@@ -24,12 +30,11 @@
 
 ## Feature
 
-### v1.0.3 (26.06.2021) (NEXT RELEASE)
+### v1.0.4 (26.06.2021) (NEXT RELEASE)
 
 * Add list methods to return saved values
 * `#6` : Add jsdoc package and run it
 * `#7` : Add a list method that will return a list of metrics for a session for an url that supports paging
-* `#11`: Enable CI/CD pipeline using App Runner with Semaphore
 
 ### v1.1.0 (30.06.2021) (NEXT RELEASE)
 

@@ -88,3 +88,21 @@ To deploy the services to AWS App Runner using a docker image, [AWS Copilot CLI]
 - Then you need to enter the 3 CNAME values as a new record as expected
 - After TTL time passes (like 5 mins), you can access your services via your custom domain name
 
+# CI/CD pipeline - AWS
+The CI/CD pipeline is created for the project using Copilot CLI which uses [AWS CodePipeline](https://aws.amazon.com/blogs/containers/enabling-continuous-workflows-for-aws-app-runner-service-with-persistency-using-aws-copilot-cli/).
+- In order to create the CI/CD pipeline, run command
+> copilot pipeline init
+- Then select the environment (prod) and select the git repository url which will create a buildspec.yml and pipeline.yml files under copilot folder
+- Update pipeline.yml file, source->properties->branch to which branch that CI/CD pipeline will work (master in our case)
+- Update pipeline.yml file, add your test commands under stages->test_commands
+- Then push these changes to git repository
+- After pushing these changes, run command
+> copilot pipeline update
+- This command will give you an [url](https://console.aws.amazon.com/codesuite/settings/connections), navigate to it and click on your pipeline
+- Then press "Update pending connection" and press "Install a new app"
+- Continue with the steps which will take you to github login page, login with your user and then select your user from the textbox and press "Connect"
+- After this you will be ready to go
+- After every commit&push to your master branch AWS CodePipeline will fetch the last commit, build the code, run your test command
+- If it is successfull then it will publish new Docker image to your AWS App Runner
+
+![AWS CodePipeline](./assets/code-pipeline.png)
