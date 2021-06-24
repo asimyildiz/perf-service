@@ -1,6 +1,6 @@
 {
   "name": "perf-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "performance library gateway to store ttfb, fcp, dom load and window load events as well as network timings for document, image, font, js and css that is being collected using perf-lib",
   "main": "index.js",
   "scripts": {
@@ -51,6 +51,7 @@
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "forever": "^4.0.1",
     "husky": "^6.0.0",
     "jest": "^27.0.4",
     "mongodb-memory-server": "^6.9.6",

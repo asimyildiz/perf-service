@@ -2,7 +2,14 @@
 
 ## History
 
-### v1.0.1 (CURRENT RELEASE)
+### v1.0.2 (CURRENT RELEASE)
+
+* Add deployment to Amazon
+* `#3` : Add forever script and configure it
+* `#4` : Add a docker image
+* `#5` : Deploy to Amazon using App Runner
+
+### v1.0.1 (PREVIOUS RELEASE)
 
 * Next version that includes handling of bulk metric data
 * `#9` : Add new route and new services to handle saving bulk data
@@ -17,18 +24,12 @@
 
 ## Feature
 
-### v1.0.1 (23.06.2021) (NEXT RELEASE)
-
-* Add deployment to Amazon
-* `#3` : Add forever script and configure it
-* `#4` : Add a docker image
-* `#5` : Deploy to Amazon ECS with ECR
-* `#6` : Add jsdoc package and run it
-
-### v1.0.2 (26.06.2021) (NEXT RELEASE)
+### v1.0.3 (26.06.2021) (NEXT RELEASE)
 
 * Add list methods to return saved values
+* `#6` : Add jsdoc package and run it
 * `#7` : Add a list method that will return a list of metrics for a session for an url that supports paging
+* `#11`: Enable CI/CD pipeline using App Runner with Semaphore
 
 ### v1.1.0 (30.06.2021) (NEXT RELEASE)
 
