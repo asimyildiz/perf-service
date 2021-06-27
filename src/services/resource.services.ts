@@ -1,6 +1,7 @@
-import { ObjectId } from 'mongoose';
+import { FilterQuery, ObjectId } from 'mongoose';
 import { IResource } from '../interfaces/resource.interface';
 import Resource from '../models/resource.model';
+import { QueryHelper } from './query.helper';
 
 /**
  * @class ResourceServices
@@ -42,5 +43,17 @@ export class ResourceServices {
     } catch (ex) {
       throw new Error(ex);
     }
+  }
+
+  /**
+   * returns all list of resource metrics or
+   * returns list of resource metrics that is saved for a session
+   * @param {?Array<string>} ids - list of ids
+   * @returns {Promise<Array<IResource>>}
+   */
+  public static async list(ids?: Array<string>): Promise<Array<IResource>> {
+    const conditions = QueryHelper.getFilterId(ids) as FilterQuery<IResource>;
+    const result = await Resource.find(conditions);
+    return result;
   }
 }

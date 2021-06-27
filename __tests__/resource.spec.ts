@@ -67,6 +67,17 @@ describe('Database method tests for Resource', () => {
     expect(resources.length).toBe(2);
   });
 
+  it('should save and return multiple resources correctly from database', async () => {
+    const resourceIds: Array<ObjectId> = await ResourceServices.saveMany([
+      data,
+      data2,
+    ]);
+    expect(resourceIds.length).toBe(2);
+
+    const resources = await ResourceServices.list();
+    expect(resources.length).toBe(2);
+  });
+
   it('should throw an error when wrong data is sent to register multiple resources', async () => {
     const nameBackup = data.name;
     data.name = '';

@@ -2,7 +2,14 @@
 
 ## History
 
-### v1.0.3 (CURRENT RELEASE)
+### v1.0.4 (CURRENT RELEASE)
+
+* Add list methods to return saved values
+* `#7` : Add a list method that will return a list of metrics for a session for an url that supports paging
+* `#13`: Add list methods for devices with their routes
+* `#14`: Add new tests
+
+### v1.0.3 (PREVIOUS RELEASE)
 
 * Add CI/CD pipeline using AWS CodePipeline
 * `#11` : Enable CI/CD pipeline using AWS CodePipeline
@@ -30,13 +37,8 @@
 
 ## Feature
 
-### v1.0.4 (26.06.2021) (NEXT RELEASE)
-
-* Add list methods to return saved values
-* `#6` : Add jsdoc package and run it
-* `#7` : Add a list method that will return a list of metrics for a session for an url that supports paging
-
 ### v1.1.0 (30.06.2021) (NEXT RELEASE)
 
 * Add authentication
+* `#6` : Add jsdoc package and run it
 * `#8` : Add a jwt token authentication 

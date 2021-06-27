@@ -1,6 +1,7 @@
-import { ObjectId } from 'mongoose';
+import { FilterQuery, ObjectId } from 'mongoose';
 import { IVital } from '../interfaces/vital.interface';
 import Vital from '../models/vital.model';
+import { QueryHelper } from './query.helper';
 
 /**
  * @class VitalServices
@@ -40,5 +41,17 @@ export class VitalServices {
     } catch (ex) {
       throw new Error(ex);
     }
+  }
+
+  /**
+   * returns all list of web-vital metrics or
+   * returns list of web-vital metrics that is saved for a session
+   * @param {?Array<string>} ids - list of ids
+   * @returns {Promise<Array<IVital>>}
+   */
+  public static async list(ids?: Array<string>): Promise<Array<IVital>> {
+    const conditions = QueryHelper.getFilterId(ids) as FilterQuery<IVital>;
+    const result = await Vital.find(conditions);
+    return result;
   }
 }

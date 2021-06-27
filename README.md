@@ -56,10 +56,10 @@ To deploy the services to AWS App Runner using a docker image, [AWS Copilot CLI]
 - Please create a named profile using AWS cli as described [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)
 
 - Run aws configure with a new profile name :
-> aws configure --profile <profilename>
+> aws configure --profile profilename
 - Enter your credentials of your new admin user
-- Set default aws profile as <profilename>
-> export AWS_PROFILE=<profilename>
+- Set default aws profile as profilename
+> export AWS_PROFILE=profilename
 
 - Steps to deploy service :
 > copilot init
@@ -70,7 +70,7 @@ To deploy the services to AWS App Runner using a docker image, [AWS Copilot CLI]
 - Create a test env         -> N
 > copilot env init
 - Give this environment a name  -> prod
-- Select credential to use      -> <profilename>
+- Select credential to use      -> profilename
 - Use default configurations
 > copilot svc deploy
 

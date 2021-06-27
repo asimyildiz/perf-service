@@ -2,6 +2,7 @@ import { Application } from 'express';
 import { ApplicationRouter } from './routers/application.router';
 import { ReportRouter } from './routers/report.router';
 import { HttpException } from './common/httpexception';
+import { ListRouter } from './routers/list.router';
 
 /**
  * @class Router
@@ -23,6 +24,13 @@ export class Router {
   private _reportRouter!: ReportRouter;
 
   /**
+   * list router object
+   * @type {ListRouter}
+   * @private
+   */
+  private _listRouter!: ListRouter;
+
+  /**
    * constructor
    * init all routers
    * set current routes for express
@@ -31,6 +39,7 @@ export class Router {
   constructor(private _application: Application) {
     this._initApplicationRouter();
     this._initReportRouter();
+    this._initListRouter();
     this.routes();
     this.handlers();
   }
@@ -52,12 +61,24 @@ export class Router {
   }
 
   /**
+   * init list router
+   * @private
+   */
+  private _initListRouter(): void {
+    this._listRouter = new ListRouter();
+  }
+
+  /**
    * set routes for service apis
    */
   public routes(): void {
     this._application.route('/').get(this._applicationRouter.hello);
     this._application.route('/report').post(this._reportRouter.report);
     this._application.route('/reportMany').post(this._reportRouter.reportMany);
+
+    this._application.route('/devices').post(this._listRouter.devices);
+    this._application.route('/vitals').post(this._listRouter.vitals);
+    this._application.route('/resources').post(this._listRouter.resources);
   }
 
   /**

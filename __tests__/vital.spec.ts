@@ -51,6 +51,17 @@ describe('Database method tests for Vital', () => {
     expect(vitals.length).toBe(2);
   });
 
+  it('should save and return multiple web-vitals correctly from database', async () => {
+    const vitalIds: Array<ObjectId> = await VitalServices.saveMany([
+      data,
+      data2,
+    ]);
+    expect(vitalIds.length).toBe(2);
+
+    const vitals = await VitalServices.list();
+    expect(vitals.length).toBe(2);
+  });
+
   it('should throw an error when wrong data is sent to register multiple vitals', async () => {
     const nameBackup = data.name;
     data.name = '';

@@ -53,6 +53,17 @@ describe('Database method tests for Device', () => {
     expect(devices.length).toBe(2);
   });
 
+  it('should save and return multiple devices correctly from database', async () => {
+    const deviceIds: Array<ObjectId> = await DeviceServices.saveMany([
+      data,
+      data2,
+    ]);
+    expect(deviceIds.length).toBe(2);
+
+    const devices = await DeviceServices.list();
+    expect(devices.length).toBe(2);
+  });
+
   it('should throw an error when wrong data is sent to register multiple devices', async () => {
     const urlBackup = data.url;
     data.url = '';

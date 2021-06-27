@@ -1,6 +1,7 @@
-import { ObjectId } from 'mongoose';
+import { FilterQuery, ObjectId } from 'mongoose';
 import { IDevice } from '../interfaces/device.interface';
 import Device from '../models/device.model';
+import { QueryHelper } from './query.helper';
 
 /**
  * @class DeviceServices
@@ -40,5 +41,24 @@ export class DeviceServices {
     } catch (ex) {
       throw new Error(ex);
     }
+  }
+
+  /**
+   * returns all list of devices for an url
+   * returns list of devices that created between startDate and endDate
+   * @param {?Date} startDate - query start date
+   * @param {?Date} endDate - query end date
+   * @returns {Promise<Array<IDevice>>}
+   */
+  public static async list(
+    startDate?: Date,
+    endDate?: Date,
+  ): Promise<Array<IDevice>> {
+    const conditions = QueryHelper.getFilterDevice(
+      startDate,
+      endDate,
+    ) as FilterQuery<IDevice>;
+    const result = await Device.find(conditions);
+    return result;
   }
 }
