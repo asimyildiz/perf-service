@@ -7,6 +7,9 @@ See [changelog](./CHANGELOG.md) for current versions and feature plans.
 # api gateway
 '/report' route is used to handle saving of single web-vitals metrics as well as resource metrics and device data
 '/reportMany' route is used to handle saving of bulk web-vitals metrics as well as resource metrics and device data 
+'/devices' route is used to list saved devices between start date and end date (if passed) (sessions)
+'/vitals' route is used to list saved web-vital metrics for a list of session ids (if passed)
+'/resources' route is used to list saved resources metrics for a list of session ids (if passed)
 
 The 2 packages used here :
 1. express.js is being used to handle http requests and responses
@@ -75,17 +78,18 @@ To deploy the services to AWS App Runner using a docker image, [AWS Copilot CLI]
 > copilot svc deploy
 
 - After you deploy the service, App Runner will give you an url to access your service
-- If you would like to use a custom domain name for this service, you need to have a domain name from a registrar
+- If you would like to use a custom domain name for this service, you need to have a domain name from a registrar (domain.com)
 - You need to open page AWS Console->Services->Route 53 then navigate to "Hosted Zones"
 - Then you need to press "Create hosted zone" 
-- You need to enter your domain name and leave other options as it is "Public Hosted Zone"
+- You need to enter your domain name (domain.com) and leave other options as it is "Public Hosted Zone"
 - After AWS created NS records for your domain, you need to copy them
 - You need to navigate your domain name registrar's page and update NS records there with the ones that you have copied (you may need to remove transfer-lock if needed)
-- Then you need to navigate AWS Console->Services->AWS App Runner and click on your service name
+- In order to access your services with a custom domain name instead of the url that AWS provided
+- You need to navigate AWS Console->Services->AWS App Runner and click on your service name
 - Then from the opened page, you need to select "Custom domains" tab and click on "Add domain" button
 - You need to set your domain name from here, and AWS will give you some CNAME values for SSL verification and domain name redirection
 - You need to again open page AWS Console->Services->Route 53 then navigate to "Hosted Zones" and select the "hosted zone" that you have created
-- Then you need to enter the 3 CNAME values as a new record as expected
+- Then you need to enter the 3 CNAME values as a new record as expected by pressing "Create Record" here
 - After TTL time passes (like 5 mins), you can access your services via your custom domain name
 
 # CI/CD pipeline - AWS
